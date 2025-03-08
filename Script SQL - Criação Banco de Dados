@@ -1,0 +1,64 @@
+-- Criando a tabela Cliente
+CREATE TABLE Cliente (
+    cliente_id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100),
+    tipo_cliente VARCHAR(2) CHECK (tipo_cliente IN ('PF', 'PJ')),
+    endereco VARCHAR(255),
+    email VARCHAR(100),
+    telefone VARCHAR(20)
+);
+
+-- Criando a tabela Pedido
+CREATE TABLE Pedido (
+    pedido_id INT PRIMARY KEY AUTO_INCREMENT,
+    cliente_id INT,
+    data_pedido DATE,
+    status_pedido VARCHAR(20),
+    forma_pagamento_id INT,
+    FOREIGN KEY (cliente_id) REFERENCES Cliente(cliente_id)
+);
+
+-- Criando a tabela Pagamento
+CREATE TABLE Pagamento (
+    pagamento_id INT PRIMARY KEY AUTO_INCREMENT,
+    pedido_id INT,
+    valor_pago DECIMAL(10,2),
+    data_pagamento DATE,
+    forma_pagamento VARCHAR(50),
+    FOREIGN KEY (pedido_id) REFERENCES Pedido(pedido_id)
+);
+
+-- Criando a tabela Entrega
+CREATE TABLE Entrega (
+    entrega_id INT PRIMARY KEY AUTO_INCREMENT,
+    pedido_id INT,
+    status_entrega VARCHAR(20),
+    codigo_rastreio VARCHAR(50),
+    FOREIGN KEY (pedido_id) REFERENCES Pedido(pedido_id)
+);
+
+-- Criando a tabela Produto
+CREATE TABLE Produto (
+    produto_id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100),
+    descricao TEXT,
+    preco DECIMAL(10,2)
+);
+
+-- Criando a tabela Fornecedor
+CREATE TABLE Fornecedor (
+    fornecedor_id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100),
+    cnpj VARCHAR(20),
+    endereco VARCHAR(255)
+);
+
+-- Criando a tabela Estoque
+CREATE TABLE Estoque (
+    estoque_id INT PRIMARY KEY AUTO_INCREMENT,
+    produto_id INT,
+    quantidade INT,
+    fornecedor_id INT,
+    FOREIGN KEY (produto_id) REFERENCES Produto(produto_id),
+    FOREIGN KEY (fornecedor_id) REFERENCES Fornecedor(fornecedor_id)
+);

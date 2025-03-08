@@ -1,0 +1,26 @@
+a. Quantos pedidos foram feitos por cada cliente?
+
+SELECT c.nome, COUNT(p.pedido_id) AS total_pedidos
+FROM Cliente c
+JOIN Pedido p ON c.cliente_id = p.cliente_id
+GROUP BY c.nome;
+
+b. Algum vendedor também é fornecedor?
+
+SELECT v.nome AS vendedor, f.nome AS fornecedor
+FROM Vendedor v
+JOIN Fornecedor f ON v.vendedor_id = f.fornecedor_id;
+
+c. Relação de produtos fornecedores e estoques
+
+SELECT p.nome AS produto, f.nome AS fornecedor, e.quantidade
+FROM Produto p
+JOIN Estoque e ON p.produto_id = e.produto_id
+JOIN Fornecedor f ON e.fornecedor_id = f.fornecedor_id;
+
+d. Relação de nomes dos fornecedores e nomes dos produtos
+
+SELECT f.nome AS fornecedor, p.nome AS produto
+FROM Fornecedor f
+JOIN Estoque e ON f.fornecedor_id = e.fornecedor_id
+JOIN Produto p ON e.produto_id = p.produto_id;
